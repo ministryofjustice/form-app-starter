@@ -12,6 +12,7 @@ const moment = require('moment');
 const path = require('path');
 const log = require('bunyan-request-logger')();
 const logger = require('../log.js');
+const nunjucks = require('nunjucks');
 
 const config = require('../server/config');
 
@@ -29,8 +30,18 @@ module.exports = function createApp({ logger, someService }) { // eslint-disable
   app.set('trust proxy', true);
 
   // View Engine Configuration
-  app.set('views', path.join(__dirname, '../server/views'));
-  app.set('view engine', 'ejs');
+  // app.set('views', path.join(__dirname, '../server/views'));
+  app.set('view engine', 'html');
+
+  nunjucks.configure([
+    path.join(__dirname, '../server/views'),
+    'node_modules/govuk-frontend/',
+    'node_modules/govuk-frontend/components/',
+  ], {
+    autoescape: true,
+    express: app,
+  });
+
 
   // Server Configuration
   app.set('port', process.env.PORT || 3000);
@@ -85,9 +96,7 @@ module.exports = function createApp({ logger, someService }) { // eslint-disable
       outputStyle: 'compressed',
       prefix: '/stylesheets/',
       includePaths: [
-        'node_modules/govuk_frontend_toolkit/stylesheets',
-        'node_modules/govuk_template_jinja/assets/stylesheets',
-        'node_modules/govuk-elements-sass/public/sass',
+        'node_modules/govuk-frontend',
       ],
     }));
   }
@@ -96,23 +105,22 @@ module.exports = function createApp({ logger, someService }) { // eslint-disable
   const cacheControl = { maxAge: config.staticResourceCacheDuration * 1000 };
 
   [
-    '../public',
     '../assets',
     '../assets/stylesheets',
-    '../node_modules/govuk_template_jinja/assets',
-    '../node_modules/govuk_frontend_toolkit',
+    '../node_modules/govuk-frontend/assets',
+    '../node_modules/govuk-frontend',
   ].forEach((dir) => {
-    app.use('/public', express.static(path.join(__dirname, dir), cacheControl));
+    app.use('/assets', express.static(path.join(__dirname, dir), cacheControl));
   });
 
   [
     '../node_modules/govuk_frontend_toolkit/images',
   ].forEach((dir) => {
-    app.use('/public/images/icons', express.static(path.join(__dirname, dir), cacheControl));
+    app.use('/assets/images/icons', express.static(path.join(__dirname, dir), cacheControl));
   });
 
   // GovUK Template Configuration
-  app.locals.asset_path = '/public/';
+  app.locals.asset_path = '/assets/';
 
   function addTemplateVariables(req, res, next) {
     res.locals.user = req.user;

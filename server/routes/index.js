@@ -11,5 +11,11 @@ module.exports = function Index({ logger, someService }) {
     res.render('pages/index', { data });
   });
 
+  router.get('/:section/:form', (req, res) => {
+    const {section, form} = req.params;
+
+    res.render('formPages/formTemplate');
+  });
+
   return router;
 };

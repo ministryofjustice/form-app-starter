@@ -1,8 +1,6 @@
 #!/bin/bash
 
 ./node_modules/node-sass/bin/node-sass $@ \
-    --include-path node_modules/govuk_frontend_toolkit/stylesheets \
-    --include-path node_modules/govuk_template_jinja/assets/stylesheets \
-    --include-path node_modules/govuk-elements-sass/public/sass \
+    --include-path 'node_modules/govuk-frontend' \
     assets/sass/style.sass \
     assets/stylesheets/application.css

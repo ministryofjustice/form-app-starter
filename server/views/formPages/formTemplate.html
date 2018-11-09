@@ -1,0 +1,38 @@
+{% extends "../partials/layout.html" %}
+
+{% block content %}
+
+<form method="post">
+  <input type="hidden" name="_csrf" value="{{ csrfToken }}" />
+
+  {% from "radios/macro.njk" import govukRadios %}
+
+  {{ govukRadios({
+    classes: "govuk-radios--inline",
+    idPrefix: "default-radio",
+    name: "defaultRadio",
+    fieldset: {
+      legend: {
+      text: "This is the default question",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
+    },
+      hint: {
+      text: "This is some really useful hint text."
+    },
+     items: [
+    {
+      value: "1",
+      text: "Answer1"
+    },
+      {
+      value: "2",
+      text: "Answer 2"
+    }
+    ]
+  }) }}
+
+</form>
+
+{% endblock %}
