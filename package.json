@@ -8,7 +8,9 @@
     "css-build": "./bin/build-css",
     "clean": "rm -rf public/* .port.tmp *.log build/* uploads/* test-results.xml",
     "lint": "eslint . --cache --max-warnings 0",
-    "test": "NODE_ENV=test mocha test/*.spec.js test/**/*.spec.js"
+    "test": "NODE_ENV=test mocha test/*.spec.js test/**/*.spec.js",
+    "migrate": "knex migrate:latest",
+    "record-build-info": "node ./bin/record-build-info"
   },
   "engines": {
     "node": ">= 8.4.0",
@@ -40,11 +42,13 @@
     "govuk-frontend": "^2.3.0",
     "helmet": "^3.12.0",
     "http-errors": "~1.6.3",
+    "knex": "^0.15.2",
     "moment": "^2.22.1",
-    "morgan": "~1.9.0",
+    "morgan": "^1.9.1",
     "node-sass-middleware": "0.11.0",
     "nunjucks": "^3.1.4",
     "passport": "^0.4.0",
+    "pg": "^7.6.1",
     "sass-middleware": "^0.0.3"
   },
   "devDependencies": {
@@ -55,7 +59,7 @@
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.11.0",
     "mocha": "^5.1.0",
-    "nodemon": "^1.17.3",
+    "nodemon": "^1.18.6",
     "sinon": "^4.5.0"
   }
 }

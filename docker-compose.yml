@@ -1,0 +1,35 @@
+version: '1.0'
+services:
+  form-builder:
+    image: mojdigitalstudio/node-form-builder:latest
+    networks:
+    - hmpps
+    depends_on:
+    - form-db
+    ports:
+    - "3000:3000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+    environment:
+    - PORT=3000
+    - DB_USER=form-builder
+    - DB_PASS=form-builder
+    - DB_SERVER=form-builder
+    - DB_NAME=form-builder
+    - DB_SSL_ENABLED=no
+
+  licence-db:
+    image: postgres
+    networks:
+    - hmpps
+    container_name: form-builder-db
+    restart: always
+    ports:
+    - "5432:5432"
+    environment:
+    - POSTGRES_PASSWORD=form-builder
+    - POSTGRES_USER=form-builder
+    - POSTGRES_DB=form-builder
+
+networks:
+  hmpps:
