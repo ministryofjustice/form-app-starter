@@ -8,7 +8,7 @@
     "css-build": "./bin/build-css",
     "clean": "rm -rf public/* .port.tmp *.log build/* uploads/* test-results.xml",
     "lint": "eslint . --cache --max-warnings 0",
-    "test": "NODE_ENV=test mocha test/*.spec.js test/**/*.spec.js",
+    "test": "jest",
     "migrate": "knex migrate:latest",
     "record-build-info": "node ./bin/record-build-info"
   },
@@ -59,7 +59,7 @@
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.11.0",
-    "mocha": "^5.1.0",
+    "jest": "^23.6.0",
     "nodemon": "^1.18.6",
     "sinon": "^4.5.0"
   }
