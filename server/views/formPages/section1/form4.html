@@ -1,0 +1,49 @@
+{% extends "../../partials/layout.html" %}
+
+{% from "checkboxes/macro.njk" import govukCheckboxes %}
+{% from "button/macro.njk" import govukButton %}
+
+{% block content %}
+
+<form method="post">
+  <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+
+  {{ govukCheckboxes({
+    idPrefix: "waste",
+    name: "waste",
+    fieldset: {
+      legend: {
+        text: "Which types of waste do you transport?",
+        isPageHeading: true,
+        classes: "govuk-fieldset__legend--xl"
+      }
+    },
+    hint: {
+     text: "Select all that apply."
+    },
+    items: [
+      {
+       value: "carcasses",
+       text: "Waste from animal carcasses",
+       checked: data.waste.includes('carcasses')
+      },
+      {
+        value: "mines",
+        text: "Waste from mines or quarries",
+        checked: data.waste.includes('mines')
+      },
+      {
+       value: "farm",
+       text: "Farm or agricultural waste",
+        checked: data.waste.includes('farm')
+      }
+    ]
+  }) }}
+
+  {{ govukButton({
+    text: "Save and continue"
+  }) }}
+
+</form>
+
+{% endblock %}

@@ -3,7 +3,7 @@ exports.up = knex =>
     knex.schema.createTable('form', (table) => {
       table.increments('id').primary('pk_form');
       table.jsonb('form_response').nullable();
-      table.integer('user_id').notNullable();
+      table.string('user_id').notNullable();
     }),
   ]);
 

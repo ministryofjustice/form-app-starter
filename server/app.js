@@ -6,7 +6,7 @@ const compression = require('compression');
 const passport = require('passport');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
-const createIndexRouter = require('./routes/index');
+const createFormRouter = require('./routes/form');
 const sassMiddleware = require('node-sass-middleware');
 const moment = require('moment');
 const path = require('path');
@@ -20,7 +20,7 @@ const version = moment.now().toString();
 const production = process.env.NODE_ENV === 'production';
 const testMode = process.env.NODE_ENV === 'test';
 
-module.exports = function createApp({ logger, someService }) { // eslint-disable-line no-shadow
+module.exports = function createApp({ logger, formService }) { // eslint-disable-line no-shadow
   const app = express();
 
   app.set('json spaces', 2);
@@ -138,7 +138,7 @@ module.exports = function createApp({ logger, someService }) { // eslint-disable
   }
 
   // Routing
-  app.use('/', createIndexRouter({ logger, someService }));
+  app.use('/', createFormRouter({ logger, formService }));
 
   app.use(renderErrors);
 

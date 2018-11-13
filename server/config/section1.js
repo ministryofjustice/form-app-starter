@@ -1,8 +1,7 @@
 module.exports = {
   form1: {
     fields: [
-      { question1: {} },
-      { question2: {} },
+      { moveToQ2: {} },
     ],
     nextPath: {
       path: '/section1/form2/',
@@ -11,17 +10,42 @@ module.exports = {
 
   form2: {
     fields: [
-      { question1: {} },
-      { question1Details: { dependentOn: 'question1', predicate: 'Yes' } },
+      { skipQ3: {} },
+      { reason: { dependentOn: 'skipQ3', predicate: 'Yes' } },
     ],
     nextPath: {
-      decision: [
+      decisions: [
         {
-          discriminator: 'question1',
-          No: '/section1/form4/',
+          discriminator: 'skipQ3',
+          Yes: '/section1/form4/',
+        },
+        {
+          discriminator: 'skipQ3',
+          No: '/section1/form3/',
         },
       ],
-      path: '/section1/form2/',
+    },
+  },
+
+  form3: {
+    fields: [
+      { addressLine1: {} },
+      { addressLine2: {} },
+      { townOrCity: {} },
+      { county: {} },
+      { postCode: {} },
+    ],
+    nextPath: {
+      path: '/section1/form4/',
+    },
+  },
+
+  form4: {
+    fields: [
+      { waste: {} },
+    ],
+    nextPath: {
+      path: '/',
     },
   },
 };

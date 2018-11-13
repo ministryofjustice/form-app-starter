@@ -1,11 +1,11 @@
 {% extends "../partials/layout.html" %}
+{% from "radios/macro.njk" import govukRadios %}
+
 
 {% block content %}
 
 <form method="post">
   <input type="hidden" name="_csrf" value="{{ csrfToken }}" />
-
-  {% from "radios/macro.njk" import govukRadios %}
 
   {{ govukRadios({
     classes: "govuk-radios--inline",
