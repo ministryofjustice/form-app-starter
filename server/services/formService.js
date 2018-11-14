@@ -1,6 +1,4 @@
-const {
-  equals, isNilOrEmpty, allValuesEmpty, notAllValuesEmpty,
-} = require('../utils/functionalHelpers');
+const { equals } = require('../utils/functionalHelpers');
 
 module.exports = function createSomeService(formClient) {
   async function getFormResponse(userId) {
@@ -30,7 +28,7 @@ module.exports = function createSomeService(formClient) {
 
   function getUpdatedFormObject({
     formObject, fieldMap, userInput, formSection, formName,
-  } = {}) {
+  }) {
     const answers = fieldMap.reduce(answersFromMapReducer(userInput), {});
 
     return {
@@ -47,32 +45,10 @@ module.exports = function createSomeService(formClient) {
       const {
         fieldName,
         answerIsRequired,
-        innerFields,
-        inputIsList,
-        fieldConfig,
       } = getFieldInfo(field, userInput);
 
       if (!answerIsRequired) {
         return answersAccumulator;
-      }
-
-      if (inputIsList) {
-        const arrayOfInputs = userInput[fieldName]
-          .map(item => getFormResponse(field[fieldName].contains, item))
-          .filter(notAllValuesEmpty);
-
-        return { ...answersAccumulator, [fieldName]: arrayOfInputs };
-      }
-
-      if (!isNilOrEmpty(innerFields)) {
-        const innerFieldMap = field[fieldName].contains;
-        const innerAnswers = getFormResponse(innerFieldMap, userInput[fieldName]);
-
-        if (!fieldConfig.saveEmpty && allValuesEmpty(innerAnswers)) {
-          return answersAccumulator;
-        }
-
-        return { ...answersAccumulator, [fieldName]: innerAnswers };
       }
 
       return { ...answersAccumulator, [fieldName]: userInput[fieldName] };
@@ -91,9 +67,6 @@ module.exports = function createSomeService(formClient) {
     return {
       fieldName,
       answerIsRequired: !fieldDependentOn || dependentMatchesPredicate,
-      innerFields: field[fieldName].contains,
-      inputIsList: fieldConfig.isList,
-      fieldConfig,
     };
   }
 
