@@ -70,7 +70,6 @@ module.exports = function createSomeService(formClient) {
     };
   }
 
-
   return {
     getFormResponse,
     update,

@@ -30,7 +30,6 @@ module.exports = function createApp({ logger, formService }) { // eslint-disable
   app.set('trust proxy', true);
 
   // View Engine Configuration
-  // app.set('views', path.join(__dirname, '../server/views'));
   app.set('view engine', 'html');
 
   nunjucks.configure([
