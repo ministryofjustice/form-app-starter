@@ -1,0 +1,22 @@
+{% extends "../formTemplate.html" %}
+
+{% from "input/macro.njk" import govukInput %}
+
+{% block formItems %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    {{ govukInput({
+      label: {
+        text: "Full name",
+        isPageHeading: true
+      },
+      id: "full-name",
+      name: "fullName",
+      value: data.fullName
+    }) }}
+  </div>
+</div>
+
+
+{% endblock %}

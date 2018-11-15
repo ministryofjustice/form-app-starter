@@ -1,9 +1,10 @@
 const express = require('express');
 const { getIn } = require('../utils/functionalHelpers');
 const { getPathFor } = require('../utils/routes');
-const formConfig = require('../config/section1');
+const formConfig = require('../config/personalDetails');
 const getFormData = require('../middleware/getFormData');
 const asyncMiddleware = require('../middleware/asyncMiddleware');
+const logger = require('../../log');
 
 module.exports = function Index({ formService, authenticationMiddleware }) {
   const router = express.Router();
@@ -18,18 +19,12 @@ module.exports = function Index({ formService, authenticationMiddleware }) {
     next();
   });
 
-  router.get('/', (req, res) => {
-    const data = 'Some data';
-
-    res.render('pages/index', { data });
-  });
-
   router.get('/:section/:form', asyncMiddleware(async (req, res) => {
     const { section, form } = req.params;
 
     const pageData = getIn([section, form], res.locals.formObject);
 
-    res.render(`formPages/${section}/${form}`, { data: pageData });
+    res.render(`formPages/${section}/${form}`, { data: pageData, formName: form });
   }));
 
   router.post('/:section/:form', asyncMiddleware(async (req, res) => {

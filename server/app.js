@@ -10,6 +10,7 @@ const { authenticationMiddleware } = auth;
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
 const createFormRouter = require('./routes/form');
+const createTasklistRouter = require('./routes/tasklist');
 const sassMiddleware = require('node-sass-middleware');
 const moment = require('moment');
 const path = require('path');
@@ -183,7 +184,9 @@ module.exports = function createApp({ signInService, formService }) {
     res.redirect(authLogoutUrl);
   });
 
-  app.use('/', createFormRouter({ logger, formService, authenticationMiddleware }));
+  app.get('/', (req, res) => res.render('pages/index'));
+  app.use('/tasklist/', createTasklistRouter({ formService, authenticationMiddleware }));
+  app.use('/form/', createFormRouter({ formService, authenticationMiddleware }));
 
   app.use(renderErrors);
 

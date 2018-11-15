@@ -1,0 +1,39 @@
+{% extends "../partials/layout.html" %}
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">Task list</h1>
+      <ol class="app-task-list">
+        <li>
+          <h2 class="app-task-list__section"><span class="app-task-list__section-number">1. </span> Personal details</h2>
+          <ul class="app-task-list__items">
+            <li class="app-task-list__item">
+              <a href="/form/personalDetails/name">Name</a>
+              {% if data.personalDetails.name %}
+              <strong class="govuk-tag app-task-list__task-completed" id="name-completed">Completed</strong>
+              {% endif %}
+            </li>
+            <li class="app-task-list__item">
+              <a href="/form/personalDetails/age">Date of birth</a>
+              {% if data.personalDetails.age %}
+              <strong class="govuk-tag app-task-list__task-completed" id="age-completed">Completed</strong>
+              {% endif %}
+            </li>
+            <li class="app-task-list__item">
+              <a href="/form/personalDetails/address">Address</a>
+              {% if data.personalDetails.address %}
+              <strong class="govuk-tag app-task-list__task-completed" id="address-completed">Completed</strong>
+              {% endif %}
+            </li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+
+  </div>
+
+  </ol>
+
+
+
+{% endblock %}

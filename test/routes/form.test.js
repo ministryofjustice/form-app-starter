@@ -1,7 +1,7 @@
 const request = require('supertest');
 const appSetup = require('./utils/appSetup');
 const createRouter = require('../../server/routes/form');
-const formConfig = require('../../server/config/section1');
+const formConfig = require('../../server/config/personalDetails');
 
 const formService = {
   getFormResponse: jest.fn(),

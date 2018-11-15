@@ -1,0 +1,42 @@
+{% extends "../formTemplate.html" %}
+
+{% from "date-input/macro.njk" import govukDateInput %}
+
+{% block formItems %}
+
+{{ govukDateInput({
+  id: "dob",
+  fieldset: {
+    legend: {
+      text: "What is your date of birth?",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--xl"
+    }
+  },
+  hint: {
+    text: "For example, 31 3 1980"
+  },
+  items: [
+    {
+      classes: "govuk-input--width-2",
+      label: "Day",
+      name: "dobDay",
+      value: data.dobDay
+    },
+    {
+      classes: "govuk-input--width-2",
+      label: "Month",
+      name: "dobMonth",
+      value: data.dobMonth
+    },
+    {
+      classes: "govuk-input--width-4",
+      label: "Year",
+      name: "dobYear",
+      value: data.dobYear
+    }
+  ]
+}) }}
+
+{% endblock %}
+

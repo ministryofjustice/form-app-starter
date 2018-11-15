@@ -1,14 +1,12 @@
-{% extends "../../partials/layout.html" %}
+{% extends "../formTemplate.html" %}
 
 {% from "input/macro.njk" import govukInput %}
 {% from "fieldset/macro.njk" import govukFieldset %}
 {% from "button/macro.njk" import govukButton %}
 
-{% block content %}
-
-<form method="post">
-  <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
-
+{% block formItems %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
   {% call govukFieldset({
     legend: {
       text: "What is your address?",
@@ -41,8 +39,8 @@
         },
         classes: "govuk-!-width-two-thirds",
         id: "address-town",
-        name: "townOrCity",
-        value: data.townOrCity
+        name: "addressTown",
+        value: data.addressTown
       }) }}
 
       {{ govukInput({
@@ -51,8 +49,8 @@
         },
         classes: "govuk-!-width-two-thirds",
         id: "address-county",
-        name: "county",
-        value: data.county
+        name: "addressCounty",
+        value: data.addressCounty
       }) }}
 
       {{ govukInput({
@@ -61,16 +59,11 @@
         },
         classes: "govuk-input--width-10",
         id: "address-postcode",
-        name: "postCode",
-        value: data.postCode
+        name: "addressPostcode",
+        value: data.addressPostcode
   }) }}
-
+  </div>
+</div>
   {% endcall %}
-
-  {{ govukButton({
-    text: "Save and continue"
-  }) }}
-
-</form>
 
 {% endblock %}

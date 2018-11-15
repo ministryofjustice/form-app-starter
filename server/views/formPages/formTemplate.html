@@ -1,5 +1,24 @@
 {% extends "../partials/layout.html" %}
-{% from "radios/macro.njk" import govukRadios %}
+{% from "breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "button/macro.njk" import govukButton %}
+
+{% block beforeContent %}
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "/"
+      },
+      {
+        text: "Task list",
+        href: "/tasklist"
+      },
+      {
+        text: formName | capitalize
+      }
+    ]
+  }) }}
+{% endblock %}
 
 
 {% block content %}
@@ -7,30 +26,12 @@
 <form method="post">
   <input type="hidden" name="_csrf" value="{{ csrfToken }}" />
 
-  {{ govukRadios({
-    classes: "govuk-radios--inline",
-    idPrefix: "default-radio",
-    name: "defaultRadio",
-    fieldset: {
-      legend: {
-      text: "This is the default question",
-      isPageHeading: true,
-      classes: "govuk-fieldset__legend--l"
-    }
-    },
-      hint: {
-      text: "This is some really useful hint text."
-    },
-     items: [
-    {
-      value: "1",
-      text: "Answer1"
-    },
-      {
-      value: "2",
-      text: "Answer 2"
-    }
-    ]
+  {% block formItems %}
+
+  {% endblock %}
+
+  {{ govukButton({
+    text: "Save and continue"
   }) }}
 
 </form>
