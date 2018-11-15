@@ -18,7 +18,7 @@ services:
     - DB_NAME=form-builder
     - DB_SSL_ENABLED=no
 
-  licence-db:
+  form-db:
     image: postgres
     networks:
     - hmpps
@@ -30,6 +30,18 @@ services:
     - POSTGRES_PASSWORD=form-builder
     - POSTGRES_USER=form-builder
     - POSTGRES_DB=form-builder
+
+  nomis-oauth2-server:
+    image: mojdigitalstudio/nomis-oauth2-server:latest
+    networks:
+    - hmpps
+    container_name: nomis-oauth2-server
+    ports:
+    - "8080:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/auth/health"]
+    environment:
+    - SPRING_PROFILES_ACTIVE=dev
 
 networks:
   hmpps:

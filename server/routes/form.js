@@ -5,8 +5,10 @@ const formConfig = require('../config/section1');
 const getFormData = require('../middleware/getFormData');
 const asyncMiddleware = require('../middleware/asyncMiddleware');
 
-module.exports = function Index({ formService }) {
+module.exports = function Index({ formService, authenticationMiddleware }) {
   const router = express.Router();
+
+  router.use(authenticationMiddleware());
   router.use(getFormData(formService));
 
   router.use((req, res, next) => {
@@ -31,26 +33,20 @@ module.exports = function Index({ formService }) {
   }));
 
   router.post('/:section/:form', asyncMiddleware(async (req, res) => {
-    try {
-      const { section, form } = req.params;
+    const { section, form } = req.params;
 
-      await formService.update({
-        userId: 'user1',
-        formId: res.locals.formId,
-        formObject: res.locals.formObject,
-        config: formConfig[form],
-        userInput: req.body,
-        formSection: section,
-        formName: form,
-      });
+    await formService.update({
+      userId: 'user1',
+      formId: res.locals.formId,
+      formObject: res.locals.formObject,
+      config: formConfig[form],
+      userInput: req.body,
+      formSection: section,
+      formName: form,
+    });
 
-      const nextPath = getPathFor({ data: req.body, config: formConfig[form] });
-      res.redirect(`${nextPath}`);
-    } catch (error) {
-      const e = error;
-      console.error(e);
-      res.redirect('/section1/form1/');
-    }
+    const nextPath = getPathFor({ data: req.body, config: formConfig[form] });
+    res.redirect(`${nextPath}`);
   }));
 
   return router;

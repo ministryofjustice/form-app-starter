@@ -24,7 +24,7 @@ afterEach(() => {
 
 describe('GET /section/form', () => {
   test.each`
-    path         | expectedContent
+    path                | expectedContent
     ${'section1/form1'} | ${'Do you want to move to question 2?'}
     ${'section1/form2'} | ${'Would you like to skip question 3?'}
     ${'section1/form3'} | ${'What is your address?'}
@@ -44,11 +44,11 @@ describe('GET /section/form', () => {
 describe('POST /section/form', () => {
   test.each`
     sectionName   | formName    | userInput                | nextPath
-    ${'section1'} | ${'form1'}  | ${{ moveToQ2: 'Yes' }}   | ${'/section1/form2/'}}
-    ${'section1'} | ${'form2'}  | ${{ skipQ3: 'Yes' }}     | ${'/section1/form4/'}}
-    ${'section1'} | ${'form2'}  | ${{ skipQ3: 'No' }}      | ${'/section1/form3/'}}
-    ${'section1'} | ${'form3'}  | ${{ addressLine1: 'a' }} | ${'/section1/form4/'}}
-    ${'section1'} | ${'form4'}  | ${{ waste: ['a'] }}      | ${'/'}}
+    ${'section1'} | ${'form1'}  | ${{ moveToQ2: 'Yes' }}   | ${'/section1/form2/'}
+    ${'section1'} | ${'form2'}  | ${{ skipQ3: 'Yes' }}     | ${'/section1/form4/'}
+    ${'section1'} | ${'form2'}  | ${{ skipQ3: 'No' }}      | ${'/section1/form3/'}
+    ${'section1'} | ${'form3'}  | ${{ addressLine1: 'a' }} | ${'/section1/form4/'}
+    ${'section1'} | ${'form4'}  | ${{ waste: ['a'] }}      | ${'/'}
   `(
   'should render $expectedContent for $sectionName/$formName',
   ({

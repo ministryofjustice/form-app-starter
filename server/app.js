@@ -4,6 +4,9 @@ const helmet = require('helmet');
 const csurf = require('csurf');
 const compression = require('compression');
 const passport = require('passport');
+const auth = require('./authentication/auth');
+
+const { authenticationMiddleware } = auth;
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
 const createFormRouter = require('./routes/form');
@@ -20,8 +23,10 @@ const version = moment.now().toString();
 const production = process.env.NODE_ENV === 'production';
 const testMode = process.env.NODE_ENV === 'test';
 
-module.exports = function createApp({ logger, formService }) { // eslint-disable-line no-shadow
+module.exports = function createApp({ signInService, formService }) {
   const app = express();
+
+  auth.init(signInService);
 
   app.set('json spaces', 2);
 
@@ -136,8 +141,49 @@ module.exports = function createApp({ logger, formService }) { // eslint-disable
     app.use(csurf());
   }
 
-  // Routing
-  app.use('/', createFormRouter({ logger, formService }));
+  // token refresh
+  app.use(async (req, res, next) => {
+    if (req.user) {
+      const timeToRefresh = new Date() > req.user.refreshTime;
+      if (timeToRefresh) {
+        req.session.returnTo = req.originalUrl;
+        return res.redirect('/login');
+      }
+    }
+    next();
+  });
+
+  // Update a value in the cookie so that the set-cookie will be sent.
+  // Only changes every minute so that it's not sent with every request.
+  app.use((req, res, next) => {
+    req.session.nowInMinutes = Math.floor(Date.now() / 60e3);
+    next();
+  });
+
+  const authLogoutUrl = `${config.nomis.authUrl}/logout?client_id=${config.nomis.apiClientId}&redirect_uri=${config.domain}`;
+
+  app.get('/autherror', (req, res) => {
+    res.status(401);
+    return res.render('autherror', {
+      authURL: authLogoutUrl,
+    });
+  });
+
+  app.get('/login', passport.authenticate('oauth2'));
+
+  app.get('/login/callback', passport.authenticate(
+    'oauth2',
+    { successReturnToOrRedirect: '/', failureRedirect: '/autherror' },
+  ));
+
+  app.use('/logout', (req, res) => {
+    if (req.user) {
+      req.logout();
+    }
+    res.redirect(authLogoutUrl);
+  });
+
+  app.use('/', createFormRouter({ logger, formService, authenticationMiddleware }));
 
   app.use(renderErrors);
 

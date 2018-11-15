@@ -21,4 +21,15 @@ module.exports = {
     database: get('DB_NAME', 'form-builder'),
     sslEnabled: get('DB_SSL_ENABLED', 'true'),
   },
+  nomis: {
+    apiUrl: get('NOMIS_API_URL', 'http://localhost:9090/elite2api'),
+    authUrl: get('NOMIS_AUTH_URL', 'http://localhost:8080/auth'),
+    timeout: {
+      response: 30000,
+      deadline: 35000,
+    },
+    apiClientId: get('API_CLIENT_ID', 'formbuilder'),
+    apiClientSecret: get('API_CLIENT_SECRET', 'formbuilder'),
+  },
+  domain: 'http://localhost:3000',
 };
