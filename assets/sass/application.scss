@@ -57,7 +57,7 @@ $path: "/public/images/";
 
 .app-task-list__task-name {
   display: block;
-  @include govuk-media-query($from: 450px)
+  @include govuk-media-query($from: 450px);
   float: left;
   width: 75%;
 }
@@ -71,7 +71,6 @@ $path: "/public/images/";
   margin-top: 0;
   margin-bottom: 0;
 }
-
 
 .user-block {
   color: white;
