@@ -30,10 +30,11 @@ module.exports = function Index({ formService, authenticationMiddleware }) {
 
   router.get('/:section/:form', asyncMiddleware(async (req, res) => {
     const { section, form } = req.params;
-
+    const backLink = req.get('Referrer');
     const pageData = getIn([section, form], res.locals.formObject);
 
-    res.render(`formPages/${section}/${form}`, { data: pageData, formName: form });
+
+    res.render(`formPages/${section}/${form}`, { data: pageData, formName: form, backLink });
   }));
 
   router.post('/:section/:form', asyncMiddleware(async (req, res) => {
