@@ -8,7 +8,7 @@ module.exports = {
         {
           discriminator: 'workedPreviously',
           Yes: '/form/agile/opinion',
-          No: '/taskList/',
+          No: '/tasklist',
         },
       ],
     },
@@ -19,7 +19,7 @@ module.exports = {
       { response: {} },
     ],
     nextPath: {
-      path: '/taskList',
+      path: '/tasklist',
     },
   },
 };

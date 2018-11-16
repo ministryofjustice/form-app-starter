@@ -3,7 +3,6 @@ const { getIn } = require('../utils/functionalHelpers');
 const { getPathFor } = require('../utils/routes');
 const getFormData = require('../middleware/getFormData');
 const asyncMiddleware = require('../middleware/asyncMiddleware');
-const logger = require('../../log');
 
 const personalDetailsConfig = require('../config/personalDetails');
 const transportConfig = require('../config/transport');

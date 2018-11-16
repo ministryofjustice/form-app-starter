@@ -19,7 +19,7 @@ module.exports = {
     password: get('DB_PASS', 'form-builder'),
     server: get('DB_SERVER', 'localhost'),
     database: get('DB_NAME', 'form-builder'),
-    sslEnabled: get('DB_SSL_ENABLED', 'true'),
+    sslEnabled: get('DB_SSL_ENABLED', 'false'),
   },
   nomis: {
     apiUrl: get('NOMIS_API_URL', 'http://localhost:9090/elite2api'),

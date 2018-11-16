@@ -15,7 +15,7 @@ module.exports = {
       { model: { dependentOn: 'haveCar', predicate: 'Yes' } },
     ],
     nextPath: {
-      path: '/taskList',
+      path: '/tasklist',
     },
   },
 };
