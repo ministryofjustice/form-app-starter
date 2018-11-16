@@ -1,42 +1,96 @@
-version: 2
+defaults: &defaults
+  working_directory: ~/noms-digital-studio/form-app-starter
+  docker:
+  - image: circleci/node:8
 
+version: 2
 jobs:
   build:
-    docker:
-      - image: circleci/node:8
-    working_directory: /home/circleci/app
-    branches:
-      ignore:
-        - /deploy-to.*/
+    <<: *defaults
     steps:
-      - checkout
-      - restore_cache:
-          key: node_modules-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
-          key: node_modules-{{ checksum "package.json" }}
-          key: node_modules
-      - restore_cache:
-          key: yarn-cache
-      - run:
-          name: Install Dependencies
-          command: yarn --frozen-lockfile
-      - save_cache:
-          key: node_modules-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
-          paths:
-            - ./node_modules
-      - save_cache:
-          key: yarn-cache
-          paths:
-            - ~/.yarn-cache
-      - run:
-          name: Linter
-          command: yarn run lint
-      - run:
-          name: Tests
-          command: yarn test --reporter mocha-junit-reporter
-          environment:
-            MOCHA_FILE: ./reports/unit/test-results.xml
+    - checkout
+    - run:
+        name: Update npm
+        command: 'sudo npm install -g npm@latest'
+    - restore_cache:
+        key: dependency-cache-{{ checksum "package-lock.json" }}
+    - run:
+        name: Install Dependencies
+        command: npm ci
+    - save_cache:
+        key: dependency-cache-{{ checksum "package-lock.json" }}
+        paths:
+        - node_modules
+    - run:
+        name: Linter check
+        command: npm run lint
+    - run:
+        command: |
+          npm run build
+          DATE=$(date '+%Y-%m-%d')
+          export BUILD_NUMBER=${DATE}.${CIRCLE_BUILD_NUM}
+          export GIT_REF="$CIRCLE_SHA1"
+          npm run record-build-info
+    - persist_to_workspace:
+        root: .
+        paths:
+        - node_modules
+        - build-info.json
+        - assets/stylesheets
 
-      - store_test_results:
-          path: ./reports
-      - store_artifacts:
-          path: ./reports
+  test:
+    <<: *defaults
+    steps:
+    - checkout
+    - restore_cache:
+        key: dependency-cache-{{ checksum "package-lock.json" }}
+    - run:
+        name: unit tests
+        command: npm run test
+    - store_test_results:
+        path: ./reports
+
+  build_docker:
+    <<: *defaults
+    steps:
+    - checkout
+    - attach_workspace:
+        at: ~/noms-digital-studio/form-app-starter
+    - setup_remote_docker:
+        exclusive: true
+    - run:
+        name: Build container and publish to docker hub (master only)
+        command: |
+          VERSION=$(egrep buildNumber build-info.json  | awk -F"\"" '{print $4}')
+          GIT_REF=$(egrep gitRef build-info.json  | awk -F"\"" '{print $8}')
+          BUILD_VERSION=${VERSION}
+
+          docker build --rm=false . \
+              --build-arg BUILD_NUMBER=$VERSION \
+              --build-arg GIT_REF=$GIT_REF \
+              --tag "mojdigitalstudio/licences:$BUILD_VERSION" \
+              --label "maintainer=licences-team@digital.justice.gov.uk" \
+              --label "build.number=$CIRCLE_BUILD_NUM" \
+              --label "build.url=$CIRCLE_BUILD_URL" \
+              --label "build.gitref=$GIT_REF"
+
+          docker login -u $DOCKER_USER -p $DOCKER_PASS
+          docker tag mojdigitalstudio/node-form-builder:$BUILD_VERSION mojdigitalstudio/node-form-builder:latest
+          docker push mojdigitalstudio/node-form-builder:$BUILD_VERSION
+          docker push mojdigitalstudio/node-form-builder:latest
+
+workflows:
+  version: 2
+  build_test_deploy:
+    jobs:
+    - build
+    - test:
+        requires:
+        - build
+    - build_docker:
+        requires:
+        - test
+        filters:
+          branches:
+            only:
+            - master
