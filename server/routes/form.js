@@ -33,7 +33,6 @@ module.exports = function Index({ formService, authenticationMiddleware }) {
     const backLink = req.get('Referrer');
     const pageData = getIn([section, form], res.locals.formObject);
 
-
     res.render(`formPages/${section}/${form}`, { data: pageData, formName: form, backLink });
   }));
 

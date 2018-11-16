@@ -94,7 +94,7 @@ module.exports = function createApp({ signInService, formService }) {
   }
 
   if (!production) {
-    app.use('/public', sassMiddleware({
+    app.use('/assets', sassMiddleware({
       src: path.join(__dirname, '../assets/sass'),
       dest: path.join(__dirname, '../assets/stylesheets'),
       debug: true,

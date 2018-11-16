@@ -2,7 +2,7 @@
 
 {% block head %}
 <!--[if !IE 8]><!-->
-<link href="/assets/stylesheets/application.css" rel="stylesheet"/>
+<link href="/assets/stylesheets/application.css?{{ version }}" rel="stylesheet"/>
 <!--<![endif]-->
 
 <!--[if IE 8]>
@@ -13,6 +13,10 @@
 <script src="/html5-shiv/html5shiv.js"></script>
 <![endif]-->
 
+{% endblock %}
+
+{% block header %}
+  {% include "./header.html" %}
 {% endblock %}
 
 {% block bodyEnd %}
