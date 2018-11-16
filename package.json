@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "start": "node server.js",
-    "start:dev": "yarn build && DEBUG=gov-starter-server* nodemon server.js | bunyan -o short",
-    "build": "yarn run css-build",
+    "start:dev": "npm build && DEBUG=gov-starter-server* nodemon server.js | bunyan -o short",
+    "build": "npm run css-build",
     "css-build": "./bin/build-css",
     "clean": "rm -rf public/* .port.tmp *.log build/* uploads/* test-results.xml",
     "lint": "eslint . --cache --max-warnings 0",
@@ -57,8 +57,6 @@
     "superagent": "^4.0.0-beta.5"
   },
   "devDependencies": {
-    "chai-as-promised": "^7.1.1",
-    "chai-string": "^1.4.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.11.0",

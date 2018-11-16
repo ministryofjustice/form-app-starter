@@ -10,7 +10,7 @@ function generateOauthClientToken() {
 }
 
 function generate(clientId, clientSecret) {
-  const token = new Buffer(`${querystring.escape(clientId)}:${querystring.escape(clientSecret)}`)
+  const token = Buffer.from(`${querystring.escape(clientId)}:${querystring.escape(clientSecret)}`)
     .toString('base64');
 
   return `Basic ${token}`;

@@ -1,10 +1,11 @@
 const request = require('supertest');
 const appSetup = require('./utils/appSetup');
 const createRouter = require('../../server/routes/form');
-const {authenticationMiddleware} = require('./utils/mockAuthentication');
+const { authenticationMiddleware } = require('./utils/mockAuthentication');
 const pdConfig = require('../../server/config/personalDetails');
 const tConfig = require('../../server/config/transport');
 const aConfig = require('../../server/config/agile');
+
 const formConfig = {
   ...pdConfig,
   ...tConfig,
@@ -72,7 +73,7 @@ describe('POST /section/form', () => {
     .send(userInput)
     .expect(302)
     .expect('Location', nextPath)
-    .expect((res) => {
+    .expect(() => {
       expect(formService.update).toBeCalledTimes(1);
       expect(formService.update).toBeCalledWith({
         userId: 'user1',

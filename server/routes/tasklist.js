@@ -1,8 +1,6 @@
 const express = require('express');
 const getFormData = require('../middleware/getFormData');
 const asyncMiddleware = require('../middleware/asyncMiddleware');
-const logger = require('../../log');
-
 
 module.exports = function Index({ formService, authenticationMiddleware }) {
   const router = express.Router();

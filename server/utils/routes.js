@@ -10,7 +10,7 @@ function getPathFor({ data, config }) {
   }
 
   if (Array.isArray(nextPath.decisions)) {
-    return determinePathFromDecisions({ decisions: nextPath.decisions, data });
+    return determinePathFromDecisions({ decisions: nextPath.decisions, data }) || nextPath.path;
   }
 
   return getPathFromAnswer({ nextPath: nextPath.decisions, data });
@@ -22,15 +22,6 @@ function getPathFromAnswer({ nextPath, data }) {
 }
 
 function determinePathFromDecisions({ decisions, data }) {
-  let path = null;
-  for (const pathConfig of decisions) {
-    const newPath = getPathFromAnswer({ nextPath: pathConfig, data });
-
-    if (newPath) {
-      path = newPath;
-      break;
-    }
-  }
-
-  return path;
+  return decisions.reduce((path, pathConfig) =>
+    path || getPathFromAnswer({ nextPath: pathConfig, data }), null);
 }

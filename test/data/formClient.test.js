@@ -8,7 +8,6 @@ afterEach(() => {
 });
 
 describe('getFormDataForUser', () => {
-
   test('it should call query on db', () => {
     formClient.getFormDataForUser('user1');
     expect(db.query).toBeCalledTimes(1);
@@ -22,7 +21,6 @@ describe('getFormDataForUser', () => {
       values: ['user1'],
     });
   });
-
 });
 
 describe('update', () => {
@@ -48,5 +46,4 @@ describe('update', () => {
       values: [{}, 'user1'],
     });
   });
-
 });

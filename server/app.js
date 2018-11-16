@@ -151,7 +151,7 @@ module.exports = function createApp({ signInService, formService }) {
         return res.redirect('/login');
       }
     }
-    next();
+    return next();
   });
 
   // Update a value in the cookie so that the set-cookie will be sent.
