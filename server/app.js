@@ -14,6 +14,7 @@ const createTasklistRouter = require('./routes/tasklist');
 const sassMiddleware = require('node-sass-middleware');
 const moment = require('moment');
 const path = require('path');
+const log = require('bunyan-request-logger')();
 const logger = require('../log.js');
 const nunjucks = require('nunjucks');
 
@@ -74,6 +75,8 @@ module.exports = function createApp({ signInService, formService }) {
   // Request Processing Configuration
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
+
+  app.use(log.requestLogger());
 
   // Resource Delivery Configuration
   app.use(compression());
