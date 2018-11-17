@@ -6,13 +6,14 @@ services:
     - hmpps
     depends_on:
     - form-db
+    - nomis-oauth2-server
     ports:
     - "3000:3000"
     environment:
     - PORT=3000
     - DB_USER=form-builder
     - DB_PASS=form-builder
-    - DB_SERVER=form-builder
+    - DB_SERVER=form-builder-db
     - DB_NAME=form-builder
     - DB_SSL_ENABLED=no
 
