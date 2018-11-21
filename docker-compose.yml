@@ -16,6 +16,8 @@ services:
     - DB_SERVER=form-builder-db
     - DB_NAME=form-builder
     - DB_SSL_ENABLED=no
+    - NOMIS_AUTH_URL=http://nomis-oauth2-server:8080/auth
+    - NOMIS_AUTH_EXTERNAL_URL=http://localhost:8080/auth
 
   form-db:
     image: postgres

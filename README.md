@@ -4,44 +4,39 @@ A simple starter kit to start writing node app with the gov uk front end toolkit
 
 
 ## Getting started
-Install dependencies using `yarn install` ensure you are using >= `Node v8.4.0`
+The easiest way to get started is to use docker compose to download and run the three required containers.
 
-Ensure you have a `.env` file containing all default env variables
+`docker-compose pull`
 
-`cp .env-template .env`
+`docker-compose up`
 
-**Starting the app**
+for detailed instructions see `https://dsdmoj.atlassian.net/wiki/spaces/NFS/overview`
 
-### Build assets
-`yarn build`
+###Users
+You can log in with users stored int eh seeded nomis oauth db e.g. `CA_USER, password123456`
 
-### Start the app.
+### Dependencies
+The app authenticates using nomis `Nomis Oauth2 Server` and saves to a Postgres database.
 
-Ensure you build assets first
 
-`yarn start`
+### Runing the app for development**
 
-### Runing the app in dev mode**
+#### Build assets
+`npm run build`
 
-`yarn start:dev`
+Install dependencies using `npm install` ensure you are using >= `Node v8.4.0`
+
+#### Env variables
+In config.js you can see all the required variables. These are set with defaults that will allow the application to run, but you will need to add a `.env` file at some point.
+
+
+`npm run start`
+
 
 ### Run linter
 
-`yarn lint`
+`npm run lint`
 
 ### Run tests
 
-`yarn test`
-
-
-## Gotchas
-If you get this error when starting the app:
-`Cannot find module './build/Release/DTraceProviderBindings'`
-
-See for more details:
-
-https://stackoverflow.com/questions/37550100/cannot-find-module-dtrace-provider
-
-Run
-
-`npm rebuild dtrace-provider`
+`npm run test`

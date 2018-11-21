@@ -22,14 +22,14 @@ module.exports = {
     sslEnabled: get('DB_SSL_ENABLED', 'false'),
   },
   nomis: {
-    apiUrl: get('NOMIS_API_URL', 'http://localhost:9090/elite2api'),
     authUrl: get('NOMIS_AUTH_URL', 'http://localhost:8080/auth'),
+    authExternalUrl: get('NOMIS_AUTH_EXTERNAL_URL', get('NOMIS_AUTH_URL', 'http://localhost:8080/auth')),
     timeout: {
       response: 30000,
       deadline: 35000,
     },
-    apiClientId: get('API_CLIENT_ID', 'formbuilder'),
-    apiClientSecret: get('API_CLIENT_SECRET', 'formbuilder'),
+    apiClientId: get('API_CLIENT_ID', 'licences'),
+    apiClientSecret: get('API_CLIENT_SECRET', 'clientsecret'),
   },
   domain: 'http://localhost:3000',
 };
