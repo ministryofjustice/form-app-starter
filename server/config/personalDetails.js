@@ -4,15 +4,15 @@ module.exports = {
       { fullName: {} },
     ],
     nextPath: {
-      path: '/form/personalDetails/age/',
+      path: '/form/personalDetails/dob/',
     },
   },
 
-  age: {
+  dob: {
     fields: [
-      { dobDay: {} },
-      { dobMonth: {} },
-      { dobYear: {} },
+      { day: {} },
+      { month: {} },
+      { year: {} },
     ],
     nextPath: {
       path: '/form/personalDetails/address/',

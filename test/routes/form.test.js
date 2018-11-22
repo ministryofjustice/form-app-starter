@@ -35,7 +35,7 @@ describe('GET /section/form', () => {
   test.each`
     path                          | expectedContent
     ${'personalDetails/name'}     | ${'Full name'}
-    ${'personalDetails/age'}      | ${'What is your date of birth?'}
+    ${'personalDetails/dob'}      | ${'What is your date of birth?'}
     ${'personalDetails/address'}  | ${'What is your address?'}
     ${'transport/commute'}        | ${'How do you commute to work?'}
     ${'transport/car'}            | ${'Do you own a car?'}
@@ -56,8 +56,8 @@ describe('GET /section/form', () => {
 describe('POST /section/form', () => {
   test.each`
     sectionName          | formName         | userInput                        | nextPath
-    ${'personalDetails'} | ${'name'}        | ${{ fullName: 'Name' }}          | ${'/form/personalDetails/age/'}
-    ${'personalDetails'} | ${'age'}         | ${{ dobDay: '12' }}              | ${'/form/personalDetails/address/'}
+    ${'personalDetails'} | ${'name'}        | ${{ fullName: 'Name' }}          | ${'/form/personalDetails/dob/'}
+    ${'personalDetails'} | ${'dob'}         | ${{ day: '12' }}                 | ${'/form/personalDetails/address/'}
     ${'personalDetails'} | ${'address'}     | ${{ addressLine1: 'Something' }} | ${'/tasklist'}
     ${'transport'}       | ${'commute'}     | ${{ commuteVia: 'a' }}           | ${'/form/transport/car/'}
     ${'transport'}       | ${'car'}         | ${{ haveCar: 'no' }}             | ${'/tasklist'}
