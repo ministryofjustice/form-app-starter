@@ -34,7 +34,6 @@ module.exports = {
           validationMessage: 'Please give a valid year',
         },
       },
-
     ],
     validate: true,
     nextPath: {
@@ -80,4 +79,4 @@ module.exports = {
       path: '/tasklist',
     },
   },
-};
+}

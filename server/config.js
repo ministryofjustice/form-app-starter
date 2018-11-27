@@ -1,15 +1,15 @@
-require('dotenv').config();
+require('dotenv').config()
 
-const production = process.env.NODE_ENV === 'production';
+const production = process.env.NODE_ENV === 'production'
 
 function get(name, fallback, options = {}) {
   if (process.env[name]) {
-    return process.env[name];
+    return process.env[name]
   }
   if (fallback !== undefined && (!production || !options.requireInProduction)) {
-    return fallback;
+    return fallback
   }
-  throw new Error(`Missing env var ${name}`);
+  throw new Error(`Missing env var ${name}`)
 }
 
 module.exports = {
@@ -32,4 +32,4 @@ module.exports = {
     apiClientSecret: get('API_CLIENT_SECRET', 'clientsecret'),
   },
   domain: 'http://localhost:3000',
-};
+}

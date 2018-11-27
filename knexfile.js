@@ -1,4 +1,4 @@
-const config = require('./server/config');
+const config = require('./server/config')
 
 module.exports = {
   client: 'pg',
@@ -10,4 +10,4 @@ module.exports = {
     ssl: config.db.sslEnabled === 'true',
   },
   acquireConnectionTimeout: 5000,
-};
+}

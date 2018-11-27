@@ -1,8 +1,6 @@
 module.exports = {
   commute: {
-    fields: [
-      { commuteVia: {} },
-    ],
+    fields: [{ commuteVia: {} }],
     nextPath: {
       path: '/form/transport/car/',
     },
@@ -18,4 +16,4 @@ module.exports = {
       path: '/tasklist',
     },
   },
-};
+}

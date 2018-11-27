@@ -1,8 +1,6 @@
 module.exports = {
   experience: {
-    fields: [
-      { workedPreviously: {} },
-    ],
+    fields: [{ workedPreviously: {} }],
     nextPath: {
       decisions: [
         {
@@ -15,11 +13,9 @@ module.exports = {
   },
 
   opinion: {
-    fields: [
-      { response: {} },
-    ],
+    fields: [{ response: {} }],
     nextPath: {
       path: '/tasklist',
     },
   },
-};
+}

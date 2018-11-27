@@ -1,4 +1,4 @@
-const R = require('ramda');
+const R = require('ramda')
 
 module.exports = {
   getIn: R.path,
@@ -7,23 +7,23 @@ module.exports = {
   firstItem: R.head,
   getFieldDetail,
   getFieldName,
-};
+}
 
 function isNilOrEmpty(item) {
-  return R.isEmpty(item) || R.isNil(item);
+  return R.isEmpty(item) || R.isNil(item)
 }
 
 function getFieldDetail(fieldPath, fieldConfig) {
   return R.pipe(
     R.values,
     R.head,
-    R.path(fieldPath),
-  )(fieldConfig);
+    R.path(fieldPath)
+  )(fieldConfig)
 }
 
 function getFieldName(fieldConfig) {
   return R.pipe(
     R.keys,
-    R.head,
-  )(fieldConfig);
+    R.head
+  )(fieldConfig)
 }
