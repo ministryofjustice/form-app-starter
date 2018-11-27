@@ -12,9 +12,10 @@
         isPageHeading: true,
         classes: "govuk-label--l"
       },
-      id: "full-name",
+      id: "fullName",
       name: "fullName",
-      value: data.fullName
+      value: data.fullName,
+      errorMessage: errors | findError('fullName')
     }) }}
   </div>
 </div>

@@ -87,7 +87,8 @@ module.exports = function createSomeService(formClient) {
       return [
         ...errors,
         {
-          text: getFieldDetail(['validationMessage'], field) || getIn(['error', 'message'], fieldErrors)
+          text: getFieldDetail(['validationMessage'], field) || getIn(['error', 'message'], fieldErrors),
+          href: `#${fieldName}`,
         },
       ];
     }, []);

@@ -16,7 +16,7 @@ const moment = require('moment');
 const path = require('path');
 const log = require('bunyan-request-logger')();
 const logger = require('../log.js');
-const nunjucks = require('nunjucks');
+const nunjucksSetup = require('./utils/nunjucksSetup');
 
 const config = require('../server/config');
 
@@ -38,15 +38,7 @@ module.exports = function createApp({ signInService, formService }) {
   // View Engine Configuration
   app.set('view engine', 'html');
 
-  nunjucks.configure([
-    path.join(__dirname, '../server/views'),
-    'node_modules/govuk-frontend/',
-    'node_modules/govuk-frontend/components/',
-  ], {
-    autoescape: true,
-    express: app,
-  });
-
+  nunjucksSetup(app, path);
 
   // Server Configuration
   app.set('port', process.env.PORT || 3000);

@@ -11,7 +11,7 @@ const fieldOptions = {
 };
 
 module.exports = {
-  validate: function (value, fieldType) {
+  validate(value, fieldType) {
     return joi.validate(value, fieldOptions[fieldType], { stripUnknown: true, abortEarly: false });
   },
 };
