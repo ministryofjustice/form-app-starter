@@ -1,13 +1,16 @@
-const joi = require('joi');
+const baseJoi = require('joi');
+const dateExtend = require('joi-date-extensions');
+const postcodeExtend = require('joi-postcode');
+
+const joi = baseJoi.extend(dateExtend).extend(postcodeExtend);
 
 const fieldOptions = {
   requiredString: joi.string().required(),
   optionalString: joi.string().allow('').optional(),
-  requiredIf: (field, answer, typeRequired = this.requiredString, ifNot = this.optionalString) => joi.when(field, {
-    is: answer,
-    then: typeRequired,
-    otherwise: ifNot,
-  }),
+  requiredDay: joi.date().format('DD').required(),
+  requiredMonth: joi.date().format('MM').required(),
+  requiredYear: joi.date().format('YYYY').required(),
+  requiredPostcode: joi.postcode().required(),
 };
 
 module.exports = {

@@ -6,6 +6,7 @@ module.exports = {
   isNilOrEmpty,
   firstItem: R.head,
   getFieldDetail,
+  getFieldName,
 };
 
 function isNilOrEmpty(item) {
@@ -17,5 +18,12 @@ function getFieldDetail(fieldPath, fieldConfig) {
     R.values,
     R.head,
     R.path(fieldPath),
+  )(fieldConfig);
+}
+
+function getFieldName(fieldConfig) {
+  return R.pipe(
+    R.keys,
+    R.head,
   )(fieldConfig);
 }

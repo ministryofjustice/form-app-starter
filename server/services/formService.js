@@ -1,5 +1,5 @@
 const {
-  equals, isNilOrEmpty, getFieldDetail, getIn,
+  equals, isNilOrEmpty, getFieldDetail, getFieldName, getIn,
 } = require('../utils/functionalHelpers');
 const { validate } = require('../utils/fieldValidation');
 
@@ -74,8 +74,8 @@ module.exports = function createSomeService(formClient) {
   }
 
   function getValidationErrors(formObject, pageConfig) {
-    return pageConfig.fields.reduce((errors, field, index) => {
-      const fieldName = Object.keys(formObject)[index];
+    return pageConfig.fields.reduce((errors, field) => {
+      const fieldName = getFieldName(field);
       const requiredResponseType = getFieldDetail(['responseType'], field);
 
       const fieldErrors = validate(formObject[fieldName], requiredResponseType);
