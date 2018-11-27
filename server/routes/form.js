@@ -1,6 +1,6 @@
 const express = require('express');
 const flash = require('connect-flash');
-const { getIn, isNilOrEmpty, firstItem } = require('../utils/functionalHelpers');
+const { getIn, isNilOrEmpty } = require('../utils/functionalHelpers');
 const { getPathFor } = require('../utils/routes');
 const getFormData = require('../middleware/getFormData');
 const asyncMiddleware = require('../middleware/asyncMiddleware');
@@ -68,7 +68,7 @@ module.exports = function Index({ formService, authenticationMiddleware }) {
     }
 
     const nextPath = getPathFor({ data: req.body, config: formConfig[form] });
-    res.redirect(`${nextPath}`);
+    return res.redirect(`${nextPath}`);
   }));
 
   return router;

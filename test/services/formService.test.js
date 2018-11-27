@@ -1,4 +1,5 @@
 const serviceCreator = require('../../server/services/formService');
+const personalDetailsConfig = require('../../server/config/personalDetails');
 
 const formClient = {
   getFormDataForUser: jest.fn(),
@@ -251,4 +252,31 @@ describe('update', () => {
       });
     });
   });
+});
+
+describe('getValidationErrors', () => {
+  const addressInputCorrect = {
+    addressLine1: 'a', addressLine2: '', addressTown: 'c', addressCounty: 'd', addressPostcode: 'LE17 4YR',
+  };
+
+  const addressInputIncorrect = {
+    addressLine1: '', addressLine2: '', addressTown: '', addressCounty: '', addressPostcode: 'L',
+  };
+
+  test.each`
+    formBody                                         | formConfig                              | expectedOutput                    
+    ${{ fullName: '' }}                              | ${personalDetailsConfig.name}           | ${[{ text: 'Please give a full name', href: '#fullName' }]} 
+    ${{ fullName: 'MW' }}                            | ${personalDetailsConfig.name}           | ${[]}         
+    ${{ day: '12', month: '03', year: '1985' }}      | ${personalDetailsConfig.dob}            | ${[]}         
+    ${{ day: '33', year: '33', month: '33' }}        | ${personalDetailsConfig.dob}            | ${[{ href: '#day', text: 'Please give a valid day' }, { href: '#month', text: 'Please give a valid month' }, { href: '#year', text: 'Please give a valid year' }]}         
+    ${addressInputCorrect}                           | ${personalDetailsConfig.address}        | ${[]}         
+    ${addressInputIncorrect}                         | ${personalDetailsConfig.address}        | ${[{ href: '#addressLine1', text: 'Please give an address line 1' }, { href: '#addressTown', text: 'Please give a town or city' }, { href: '#addressCounty', text: 'Please give a county' }, { href: '#addressPostcode', text: 'Please give a postcode' }]}         
+  `(
+  'should return errors $expectedContent for form return',
+  ({
+    formBody, formConfig, expectedOutput,
+  }) => {
+    expect(service.getValidationErrors(formBody, formConfig)).toEqual(expectedOutput);
+  },
+);
 });

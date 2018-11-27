@@ -15,6 +15,7 @@ const formConfig = {
 const formService = {
   getFormResponse: jest.fn(),
   update: jest.fn(),
+  getValidationErrors: jest.fn().mockReturnValue([]),
 };
 
 const formRoute = createRouter({ formService, authenticationMiddleware });
@@ -40,7 +41,7 @@ describe('GET /section/form', () => {
     ${'transport/commute'}        | ${'How do you commute to work?'}
     ${'transport/car'}            | ${'Do you own a car?'}
     ${'agile/experience'}         | ${'Have you worked with agile methodologies before?'}
-    ${'agile/opinion'}            | ${'Can you provide your opinions on agile working?\n'}
+    ${'agile/opinion'}            | ${'Can you provide your opinions on agile working?'}
   `(
   'should render $expectedContent for $path',
   ({ path, expectedContent }) => request(app)
