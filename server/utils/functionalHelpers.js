@@ -4,18 +4,18 @@ module.exports = {
   getIn: R.path,
   equals: R.equals,
   isNilOrEmpty,
-  allValuesEmpty,
-  notAllValuesEmpty,
+  firstItem: R.head,
+  getFieldDetail,
 };
 
 function isNilOrEmpty(item) {
   return R.isEmpty(item) || R.isNil(item);
 }
 
-function allValuesEmpty(object) {
-  return R.pipe(R.values, R.all(R.isEmpty))(object);
-}
-
-function notAllValuesEmpty(object) {
-  return !allValuesEmpty(object);
+function getFieldDetail(fieldPath, fieldConfig) {
+  return R.pipe(
+    R.values,
+    R.head,
+    R.path(fieldPath),
+  )(fieldConfig);
 }

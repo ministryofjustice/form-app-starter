@@ -1,8 +1,14 @@
 module.exports = {
   name: {
     fields: [
-      { fullName: {} },
+      {
+        fullName: {
+          responseType: 'requiredString',
+          validationMessage: 'Please give a full name',
+        },
+      },
     ],
+    validate: true,
     nextPath: {
       path: '/form/personalDetails/dob/',
     },

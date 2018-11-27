@@ -1,4 +1,7 @@
-const { equals } = require('../utils/functionalHelpers');
+const {
+  equals, isNilOrEmpty, getFieldDetail, getIn,
+} = require('../utils/functionalHelpers');
+const { validate } = require('../utils/fieldValidation');
 
 module.exports = function createSomeService(formClient) {
   async function getFormResponse(userId) {
@@ -70,8 +73,29 @@ module.exports = function createSomeService(formClient) {
     };
   }
 
+  function getValidationErrors(formObject, pageConfig) {
+    return pageConfig.fields.reduce((errors, field, index) => {
+      const fieldName = Object.keys(formObject)[index];
+      const requiredResponseType = getFieldDetail(['responseType'], field);
+
+      const fieldErrors = validate(formObject[fieldName], requiredResponseType);
+
+      if (isNilOrEmpty(fieldErrors.error)) {
+        return errors;
+      }
+
+      return [
+        ...errors,
+        {
+          text: getFieldDetail(['validationMessage'], field) || getIn(['error', 'message'], fieldErrors)
+        },
+      ];
+    }, []);
+  }
+
   return {
     getFormResponse,
     update,
+    getValidationErrors,
   };
 };
