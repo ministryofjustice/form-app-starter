@@ -39,7 +39,7 @@ module.exports = route => {
       lastName: 'last',
       userId: 'id',
       token: 'token',
-      username: 'CA_USER_TEST',
+      username: 'user1',
     }
     next()
   })
