@@ -1,4 +1,4 @@
-const { equals, isNilOrEmpty, getFieldDetail, getFieldName, getIn } = require('../utils/functionalHelpers')
+const { equals } = require('../utils/functionalHelpers')
 const { validate } = require('../utils/fieldValidation')
 
 module.exports = function createSomeService(formClient) {
@@ -63,30 +63,9 @@ module.exports = function createSomeService(formClient) {
     }
   }
 
-  function getValidationErrors(formObject, pageConfig) {
-    return pageConfig.fields.reduce((errors, field) => {
-      const fieldName = getFieldName(field)
-      const requiredResponseType = getFieldDetail(['responseType'], field)
-
-      const fieldErrors = validate(formObject[fieldName], requiredResponseType)
-
-      if (isNilOrEmpty(fieldErrors.error)) {
-        return errors
-      }
-
-      return [
-        ...errors,
-        {
-          text: getFieldDetail(['validationMessage'], field) || getIn(['error', 'message'], fieldErrors),
-          href: `#${fieldName}`,
-        },
-      ]
-    }, [])
-  }
-
   return {
     getFormResponse,
     update,
-    getValidationErrors,
+    getValidationErrors: validate,
   }
 }

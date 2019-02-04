@@ -7,6 +7,7 @@ module.exports = {
   firstItem: R.head,
   getFieldDetail,
   getFieldName,
+  mergeWithRight: R.mergeDeepRight,
 }
 
 function isNilOrEmpty(item) {
