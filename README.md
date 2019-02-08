@@ -1,6 +1,6 @@
-# GOVUK startkit
+# Form app starter
 
-A simple starter kit to start writing node app with the gov uk front end toolkit.
+A simple starter kit to start writing form based node app with the gov uk front end toolkit.
 
 
 ## Getting started
