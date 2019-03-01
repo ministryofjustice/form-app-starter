@@ -83,4 +83,17 @@ describe('POST /section/form', () => {
         })
       })
   )
+
+  test('should not update the licence if the input is invalid', () => {
+    formService.getValidationErrors.mockReturnValue({ some: 'thing' })
+
+    return request(app)
+      .post(`/personalDetails/name`)
+      .send({ user: 'input' })
+      .expect(302)
+      .expect('Location', '/form/personalDetails/name/')
+      .expect(() => {
+        expect(formService.update).toBeCalledTimes(0)
+      })
+  })
 })

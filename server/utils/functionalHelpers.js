@@ -8,6 +8,7 @@ module.exports = {
   getFieldDetail,
   getFieldName,
   mergeWithRight: R.mergeDeepRight,
+  pickBy: R.pickBy,
 }
 
 function isNilOrEmpty(item) {
