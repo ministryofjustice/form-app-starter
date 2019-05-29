@@ -1,5 +1,5 @@
-const config = require('../config')
 const querystring = require('querystring')
+const config = require('../config')
 
 module.exports = {
   generateOauthClientToken,
