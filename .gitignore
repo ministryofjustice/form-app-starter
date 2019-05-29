@@ -17,3 +17,7 @@ build-info.json
 .env
 yarn-error.log
 .eslintcache
+
+*/*.iml
+*secrets*.yaml
+!secrets-example.yaml

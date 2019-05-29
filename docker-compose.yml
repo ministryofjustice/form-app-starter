@@ -1,14 +1,16 @@
 version: '3.1'
 services:
   form-builder:
-    image: mojdigitalstudio/node-form-builder:latest
+    build: .
     networks:
-    - hmpps
+      - hmpps
     depends_on:
-    - form-db
-    - nomis-oauth2-server
+      - form-builder-db
+      - nomis-oauth2-server
     ports:
-    - "3000:3000"
+      - "3000:3000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
     environment:
     - PORT=3000
     - DB_USER=form-builder
@@ -19,14 +21,14 @@ services:
     - NOMIS_AUTH_URL=http://nomis-oauth2-server:8080/auth
     - NOMIS_AUTH_EXTERNAL_URL=http://localhost:8080/auth
 
-  form-db:
+  form-builder-db:
     image: postgres
     networks:
     - hmpps
     container_name: form-builder-db
     restart: always
     ports:
-    - "5432:5432"
+      - "5432:5432"
     environment:
     - POSTGRES_PASSWORD=form-builder
     - POSTGRES_USER=form-builder
@@ -35,14 +37,14 @@ services:
   nomis-oauth2-server:
     image: mojdigitalstudio/nomis-oauth2-server:latest
     networks:
-    - hmpps
+      - hmpps
     container_name: nomis-oauth2-server
     ports:
-    - "8080:8080"
+      - "8080:8080"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/auth/health"]
     environment:
-    - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_PROFILES_ACTIVE=dev
 
 networks:
   hmpps:
