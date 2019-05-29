@@ -1,25 +1,25 @@
 const express = require('express')
+const log = require('bunyan-request-logger')()
 const addRequestId = require('express-request-id')()
 const helmet = require('helmet')
 const csurf = require('csurf')
+const path = require('path')
+const moment = require('moment')
 const compression = require('compression')
 const passport = require('passport')
-const auth = require('./authentication/auth')
-
-const { authenticationMiddleware } = auth
 const bodyParser = require('body-parser')
 const cookieSession = require('cookie-session')
+const sassMiddleware = require('node-sass-middleware')
+
+const healthcheck = require('./services/healthcheck')
 const createFormRouter = require('./routes/form')
 const createTasklistRouter = require('./routes/tasklist')
-const sassMiddleware = require('node-sass-middleware')
-const moment = require('moment')
-const path = require('path')
-const log = require('bunyan-request-logger')()
 const logger = require('../log.js')
 const nunjucksSetup = require('./utils/nunjucksSetup')
-
+const auth = require('./authentication/auth')
 const config = require('../server/config')
 
+const { authenticationMiddleware } = auth
 const version = moment.now().toString()
 const production = process.env.NODE_ENV === 'production'
 const testMode = process.env.NODE_ENV === 'test'
@@ -116,6 +116,20 @@ module.exports = function createApp({ signInService, formService }) {
     app.use('/assets/images/icons', express.static(path.join(__dirname, dir), cacheControl))
   })
 
+  // Express Routing Configuration
+  app.get('/health', (req, res, next) => {
+    healthcheck((err, result) => {
+      if (err) {
+        return next(err)
+      }
+      if (!result.healthy) {
+        res.status(503)
+      }
+      res.json(result)
+      return result
+    })
+  })
+
   // GovUK Template Configuration
   app.locals.asset_path = '/assets/'
 
@@ -192,7 +206,7 @@ module.exports = function createApp({ signInService, formService }) {
 }
 
 // eslint-disable-next-line no-unused-vars
-function renderErrors(error, req, res, next) {
+function renderErrors(error, req, res) {
   logger.error(error)
 
   // code to handle unknown errors
