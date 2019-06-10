@@ -1,5 +1,4 @@
 # Form app starter
-
 A simple starter kit to start writing form based node app with the gov uk front end toolkit.
 
 
@@ -12,26 +11,23 @@ The easiest way to get started is to use docker compose to download and run the 
 
 for detailed instructions see `https://dsdmoj.atlassian.net/wiki/spaces/NFS/overview`
 
-###Users
-You can log in with users stored int eh seeded nomis oauth db e.g. `CA_USER, password123456`
+### Users
+You can log in with users stored in the seeded nomis oauth db e.g. `CA_USER, password123456`
 
 ### Dependencies
 The app authenticates using nomis `Nomis Oauth2 Server` and saves to a Postgres database.
-
 
 ### Runing the app for development**
 
 #### Build assets
 `npm run build`
 
-Install dependencies using `npm install` ensure you are using >= `Node v8.4.0`
+Install dependencies using `npm install` ensure you are using >= `Node v10.15.3`
 
 #### Env variables
 In config.js you can see all the required variables. These are set with defaults that will allow the application to run, but you will need to add a `.env` file at some point.
 
-
 `npm run start`
-
 
 ### Run linter
 
