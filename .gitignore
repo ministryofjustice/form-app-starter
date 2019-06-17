@@ -18,6 +18,7 @@ build-info.json
 yarn-error.log
 .eslintcache
 
+reports/test-reports.html
 */*.iml
 *secrets*.yaml
 !secrets-example.yaml
