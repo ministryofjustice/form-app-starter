@@ -206,7 +206,7 @@ module.exports = function createApp({ signInService, formService }) {
 }
 
 // eslint-disable-next-line no-unused-vars
-function renderErrors(error, req, res) {
+function renderErrors(error, req, res, next) {
   logger.error(error)
 
   // code to handle unknown errors
