@@ -32,4 +32,5 @@ module.exports = {
     apiClientSecret: get('API_CLIENT_SECRET', 'clientsecret'),
   },
   domain: `${get('INGRESS_URL', 'http://localhost:3000', true)}`,
+  https: production,
 }
