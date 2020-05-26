@@ -71,7 +71,7 @@
     "joi-date-extensions": "^1.2.0",
     "joi-postcode": "^3.0.0",
     "jwt-decode": "^2.2.0",
-    "knex": "^0.16.5",
+    "knex": "^0.21.1",
     "moment": "^2.24.0",
     "morgan": "^1.9.1",
     "node-sass-middleware": "0.11.0",
